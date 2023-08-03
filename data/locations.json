@@ -1,0 +1,238 @@
+{
+    "Alunze Basement": {
+        "access_rules": [
+            "bomb",
+            "hammer"
+        ],
+        "timeCost": 5
+    },
+    "Alunze Northwest Cave": {
+        "access_rules": [
+            "bomb",
+            "hammer"
+        ],
+        "timeCost": 5
+    },
+    "Ancient Tower": {
+        "access_rules": [
+            "bomb,hook,c_key",
+            "hammer,hook,c_key"
+        ],
+        "timeCost": 10
+    },
+    "Bridge Cave": {
+        "access_rules": [
+            "bomb,hook",
+            "hammer,hook"
+        ],
+        "timeCost": 2
+    },
+    "Capsule Monster Cave": {
+        "access_rules": [
+            "mermaid"
+        ],
+        "timeCost": 1
+    },
+    "Capsule Monster Shrine": {
+        "access_rules": [],
+        "timeCost": 1
+    },
+    "Dankirk North Cave": {
+        "access_rules": [
+            "bomb,hook,d_key"
+        ],
+        "timeCost": 25
+    },
+    "Divine Shrine": {
+        "access_rules": [
+            "h_key,hook,hammer"
+        ],
+        "timeCost": 15
+    },
+    "Doom Island": {
+        "access_rules": [
+            "claire,lisa,marie"
+        ],
+        "timeCost": 0
+    },
+    "Dragon Mountain": {
+        "access_rules": [
+            "m_key,hook,hammer,firearrow,engine",
+            "m_key,hook,hammer,firearrow,mermaid"
+        ],
+        "timeCost": 20
+    },
+    "Flower Capsule": {
+        "access_rules": [
+            "hammer,hook"
+        ],
+        "timeCost": 3
+    },
+    "Flower Mountain": {
+        "access_rules": [
+            "hammer,flower_key"
+        ],
+        "timeCost": 4
+    },
+    "Foomy Woods": {
+        "access_rules": [],
+        "timeCost": 1
+    },
+    "Gordovan West Tower": {
+        "access_rules": [
+            "bomb,hook,w_key"
+        ],
+        "timeCost": 10
+    },
+    "Gratze Castle": {
+        "access_rules": [
+            "b_key,engine,arrow",
+            "b_key,engine,firearrow",
+            "b_key,engine,hook",
+            "b_key,mermaid,arrow",
+            "b_key,mermaid,firearrow",
+            "b_key,mermaid,hook",
+            "bomb,hook,d_key,b_key"
+        ],
+        "timeCost": 10
+    },
+    "Kamirno": {
+        "access_rules": [
+            "engine"
+        ],
+        "timeCost": 10
+    },
+    "Karlloon North Shrine": {
+        "access_rules": [
+            "bomb,hook"
+        ],
+        "timeCost": 10
+    },
+    "Lake Cave": {
+        "access_rules": [
+            "l_key,arrow",
+            "l_key,firearrow",
+            "l_key,hook"
+        ],
+        "timeCost": 10
+    },
+    "Lexis Shaia Laboratory": {
+        "access_rules": [],
+        "timeCost": 1
+    },
+    "Mountain Of No Return": {
+        "access_rules": [],
+        "timeCost": 1
+    },
+    "North Dungeon Capsule": {
+        "access_rules": [
+            "hook"
+        ],
+        "timeCost": 4
+    },
+     "North Dungeon": {
+        "access_rules": [
+            "bomb"
+        ],
+        "timeCost": 4
+    },
+    "North Lighthouse": {
+        "access_rules": [
+            "li_key"
+        ],
+        "timeCost": 10
+    },
+    "Northeast Tower": {
+        "access_rules": [
+            "hook,hammer,tri_key"
+        ],
+        "timeCost": 5
+    },
+    "Phantom Tree Mountain": {
+        "access_rules": [
+            "bomb,hook,firearrow,tree_key"
+        ],
+        "timeCost": 20
+    },
+    "Ruby Cave Capsule": {
+        "access_rules": [
+            "bomb",
+            "hammer"
+        ],
+        "timeCost": 2
+    },
+    "Ruby Cave": {
+        "access_rules": [
+            "ruby_key"
+        ],
+        "timeCost": 7
+    },
+    "Shrine Of Vengeance": {
+        "access_rules": [
+            "g_key,mermaid,bomb,hammer"
+        ],
+        "timeCost": 15
+    },
+    "Shuman": {
+        "access_rules": [
+            "engine"
+        ],
+        "timeCost": 10
+    },
+    "Skill Cave": {
+        "access_rules": [
+            "arrow",
+            "firearrow",
+            "hook"
+        ],
+        "timeCost": 2
+    },
+    "Strahda": {
+        "access_rules": [
+            "engine"
+        ],
+        "timeCost": 10
+    },
+    "Submarine Cave": {
+        "access_rules": [
+            "mermaid"
+        ],
+        "timeCost": 2
+    },
+    "Sundletan Cave": {
+        "access_rules": [],
+        "timeCost": 1
+    },
+    "Tanbel Southeast Tower": {
+        "access_rules": [
+            "s_key"
+        ],
+        "timeCost": 10
+    },
+    "Tower of Sacrifice": {
+        "access_rules": [
+            "n_key,hook,bomb"
+        ],
+        "timeCost": 7
+    },
+    "Tower of Sacrifice Capsule": {
+        "access_rules": [
+            "n_key,hook,bomb",
+            "n_key,hook,hammer"
+        ],
+        "timeCost": 5
+    },
+    "Tower of Truth": {
+        "access_rules": [
+            "tr_key,hook,bomb",
+            "tr_key,hook,hammer"
+        ],
+        "timeCost": 10
+    },
+    "Treasure Sword Shrine": {
+        "access_rules": [
+            "sw_key,bomb"
+        ],
+        "timeCost": 20
+    }
+}
