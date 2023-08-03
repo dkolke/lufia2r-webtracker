@@ -5,15 +5,15 @@ Used to track via web; easily adaptable. Also for other games.
 
 ### Installation
 
-- Clone this repository
+- Clone this repository or download a release.
 - Download Lufia2.zip from HolySmith24's [GitHub](https://github.com/HolySmith24/Lufia_2Tracker)
-- Extract Lufia2.zip inside "Lufia2" folder
+- Extract Lufia2.zip inside "Lufia2" folder.
 - Upload to your server.
-- Enjoy
+- Enjoy.
 
 ### Credits
 
-[HolySmith24](https://github.com/HolySmith24) for tracking data. Their own license applies.
+[holysmith](https://github.com/HolySmith24), Deln and dank_meats for tracking data. Their own license applies.
 
 ### Changes
 - v1.0
