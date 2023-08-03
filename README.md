@@ -6,8 +6,8 @@ Used to track via web.
 ### Installation
 
 - Clone this repository
-- Download HolySmith24.zip from their [github](https://github.com/HolySmith24/Lufia_2Tracker)
-- Extract HolySmith24.zip to "Lufia2" folder
+- Download Lufia2.zip from their [github](https://github.com/HolySmith24/Lufia_2Tracker)
+- Extract Lufia2.zip inside "Lufia2" folder
 - Upload to your server.
 
 ### Credits
