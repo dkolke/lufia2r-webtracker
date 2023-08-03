@@ -1,14 +1,15 @@
 
 # Lufia 2 Randomizer Webtracker
 
-Used to track via web.
+Used to track via web, easily adaptable. Also for other games.
 
 ### Installation
 
 - Clone this repository
-- Download Lufia2.zip from their [github](https://github.com/HolySmith24/Lufia_2Tracker)
+- Download Lufia2.zip from HolySmith24's [github](https://github.com/HolySmith24/Lufia_2Tracker)
 - Extract Lufia2.zip inside "Lufia2" folder
 - Upload to your server.
+- Enjoy
 
 ### Credits
 
