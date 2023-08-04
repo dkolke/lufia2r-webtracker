@@ -13,7 +13,7 @@ Used to track via web; easily adaptable. Also for other games.
 
 ### Credits
 
-[holysmith](https://github.com/HolySmith24), Deln and dank_meats for tracking data. Their own license applies.
+[holysmith](https://github.com/HolySmith24), Deln and dank_meats for tracking data and images. Their own license applies.
 
 ### Changes
 - v1.0
