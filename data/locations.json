@@ -114,7 +114,7 @@
             "l_key,firearrow",
             "l_key,hook"
         ],
-        "timeCost": 10
+        "timeCost": 5
     },
     "Lexis Shaia Laboratory": {
         "access_rules": [],
@@ -122,7 +122,7 @@
     },
     "Mountain Of No Return": {
         "access_rules": [],
-        "timeCost": 1
+        "timeCost": 2
     },
     "North Dungeon Capsule": {
         "access_rules": [
@@ -165,7 +165,7 @@
         "access_rules": [
             "ruby_key"
         ],
-        "timeCost": 7
+        "timeCost": 3
     },
     "Shrine Of Vengeance": {
         "access_rules": [
@@ -201,7 +201,7 @@
     },
     "Sundletan Cave": {
         "access_rules": [],
-        "timeCost": 1
+        "timeCost": 2
     },
     "Tanbel Southeast Tower": {
         "access_rules": [
