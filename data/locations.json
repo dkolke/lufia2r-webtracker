@@ -132,7 +132,7 @@
     },
      "North Dungeon": {
         "access_rules": [
-            "bomb"
+            "bomb,hook"
         ],
         "timeCost": 4
     },
