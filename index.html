@@ -125,12 +125,13 @@
 						}
 					}
 				})
-				openChecks = openChecks.sort( (a,b) => (a.name > b.name) )
-				openChecks = openChecks.sort( (a,b) => (a.timeCost > b.timeCost) )
 				var openElems = ""
-				openChecks.forEach( a => {
-					openElems += "<span class=\"badge bg-info pointer\" onclick=\"tracker.toggleDone('" + a.name + "')\">" + a.name + "</span><br/>"
-				})
+				openChecks
+					.sort( (a,b) => (a.name > b.name) )
+					.sort( (a,b) => (a.timeCost > b.timeCost) )
+					.forEach( a => {
+						openElems += "<span class=\"badge bg-info pointer\" onclick=\"tracker.toggleDone('" + a.name + "')\">" + a.name + "</span><br/>"
+					})
 				$("#tobechecked").html(openElems)
 				var doneElems = ""
 				doneChecks.forEach( a => {
