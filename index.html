@@ -77,6 +77,14 @@
 		<div id="tobechecked"></div>
 		<div class="p-4">Done:</div>
 		<div id="done"></div>
+		<div class="p-4">Character Locations:</div>
+		<img src="Lufia2/images/character/maxim.png"/> <select class="loca"><option>- / -</option></select><br/>
+		<img src="Lufia2/images/character/tia.png"/> <select class="loca"><option>- / -</option></select><br/>
+		<img src="Lufia2/images/character/guy.png"/> <select class="loca"><option>- / -</option></select><br/>
+		<img src="Lufia2/images/character/selan.png"/> <select class="loca"><option>- / -</option></select><br/>
+		<img src="Lufia2/images/character/dekar.png"/> <select class="loca"><option>- / -</option></select><br/>
+		<img src="Lufia2/images/character/lexis.png"/> <select class="loca"><option>- / -</option></select><br/>
+		<img src="Lufia2/images/character/arty.png"/> <select class="loca"><option>- / -</option></select><br/>
 	</center>
 	<script>
 		tracker = {
@@ -84,6 +92,11 @@
 			load: async data => {
 				tracker.locations = await data.json()
 				tracker.reset()
+				Object.keys(tracker.locations).forEach( k => {
+					$(".loca").each( (i,e) => {
+						e.innerHTML += "<option>" + k + "</option>"
+					})
+				})
 			},
 			toggleDone: k => {
 				tracker.locations[k].done = ! tracker.locations[k].done
