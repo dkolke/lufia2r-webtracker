@@ -36,6 +36,21 @@
 		.pointer {
 			cursor:pointer;
 		}
+		.badge-grid {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			align-items: center;
+			min-height: 8rem;
+			max-height: 8rem;
+			width: 70%;
+			row-gap: 5px;
+			column-gap: 5px;
+			align-content: center;
+		}
+		.badge-item {
+			width: 12rem;
+		}
 	</style>
 </head>
 <body>
@@ -74,17 +89,27 @@
 		<img class="collectible" name="tr_key" src="Lufia2/images/item/truth_key.png" title="Truth Key"/>
 		<img class="collectible" name="w_key" src="Lufia2/images/item/wind_key.png" title="Wind Key"/>
 		<div class="p-4">To be checked:</div>
-		<div id="tobechecked"></div>
+		<div class="badge-grid" id="tobechecked"></div>
 		<div class="p-4">Done:</div>
-		<div id="done"></div>
-		<div class="p-4">Character Locations:</div>
-		<img src="Lufia2/images/character/maxim.png"/> <select class="loca"><option>- / -</option></select><br/>
-		<img src="Lufia2/images/character/tia.png"/> <select class="loca"><option>- / -</option></select><br/>
-		<img src="Lufia2/images/character/guy.png"/> <select class="loca"><option>- / -</option></select><br/>
-		<img src="Lufia2/images/character/selan.png"/> <select class="loca"><option>- / -</option></select><br/>
-		<img src="Lufia2/images/character/dekar.png"/> <select class="loca"><option>- / -</option></select><br/>
-		<img src="Lufia2/images/character/lexis.png"/> <select class="loca"><option>- / -</option></select><br/>
-		<img src="Lufia2/images/character/arty.png"/> <select class="loca"><option>- / -</option></select><br/>
+		<div class="badge-grid" id="done"></div>
+		<div style="width: 90%" class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-3">
+				<div class="p-4">Character Locations:</div>
+				<img src="Lufia2/images/character/maxim.png"/> <select name="maxim" class="loca"><option>- / -</option></select><br/>
+				<img src="Lufia2/images/character/tia.png"/> <select name="tia" class="loca"><option>- / -</option></select><br/>
+				<img src="Lufia2/images/character/guy.png"/> <select name="guy" class="loca"><option>- / -</option></select><br/>
+				<img src="Lufia2/images/character/selan.png"/> <select name="selan" class="loca"><option>- / -</option></select><br/>
+				<img src="Lufia2/images/character/dekar.png"/> <select name="dekar" class="loca"><option>- / -</option></select><br/>
+				<img src="Lufia2/images/character/lexis.png"/> <select name="lexis" class="loca"><option>- / -</option></select><br/>
+				<img src="Lufia2/images/character/arty.png"/> <select name="arty" class="loca"><option>- / -</option></select><br/>
+			</div>
+			<div class="col-md-3">
+				<div class="p-4">Notes:</div>
+				<textarea id="notes" style="height: 10rem"></textarea>
+			</div>
+			<div class="col-md-3"></div>
+		</div>
 	</center>
 	<script>
 		tracker = {
@@ -148,7 +173,7 @@
 				$("#tobechecked").html(openElems)
 				var doneElems = ""
 				doneChecks.forEach( a => {
-					doneElems += "<span class=\"badge bg-secondary pointer\" onclick=\"tracker.toggleDone('" + a + "')\">" + a + "</span><br/>"
+					doneElems += "<span class=\"badge bg-secondary pointer badge-item \" onclick=\"tracker.toggleDone('" + a + "')\">" + a + "</span>"
 				})
 				$("#done").html(doneElems)
 			},
