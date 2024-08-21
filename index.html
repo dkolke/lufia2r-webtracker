@@ -110,37 +110,103 @@
 			</div>
 			<div class="col-md-3"></div>
 		</div>
+		<button id="resetButton" type="button" class="btn btn-secondary btn-sm" >Reset</button>
 	</center>
 	<script>
+		const LOCATION_KEY = "lufia2r-webtracker-locations";
+		const CHARACTER_KEY = "lufia2r-webtracker-characters";
+		const KEYITEMS_KEY = "lufia2r-webtracker-keyitems";
+		const NOTES_KEY = "lufia2r-webtracker-notes";
 		tracker = {
 			locations: {},
+			keyitems: {},
+			notes: "",
+			characterLocations: {},
 			load: async data => {
-				tracker.locations = await data.json()
-				tracker.reset()
+				const loadedLocations = JSON.parse(localStorage.getItem(LOCATION_KEY))
+				if(loadedLocations) {
+					tracker.locations = loadedLocations
+				} else {
+					tracker.locations = await data.json()
+				}
 				Object.keys(tracker.locations).forEach( k => {
 					$(".loca").each( (i,e) => {
 						e.innerHTML += "<option>" + k + "</option>"
 					})
 				})
+
+				const loadedCharacters = JSON.parse(localStorage.getItem(CHARACTER_KEY))
+				if(loadedCharacters) {
+					tracker.characterLocations = loadedCharacters
+					$(".loca").each( (i,e) => {
+						const character = loadedCharacters.find(c => c.name === e.name)
+						if(character && character.location !== "- / -") {
+							$(e).val(character.location)
+						}
+					})					
+				} else {
+					tracker.characterLocations = []
+					$(".loca").each( (i,e) => {
+						tracker.characterLocations.push({ "name": e.name, "location": "- / -" })
+					})							
+				}
+
+				const loadedKeyitems = JSON.parse(localStorage.getItem(KEYITEMS_KEY))
+
+				if(loadedKeyitems) {
+					tracker.keyitems = loadedKeyitems
+				} else {
+					tracker.keyitems = []
+					$("img[class^=collectible").each( (i,e) => {
+						tracker.keyitems.push( { "name": e.name, "owned": false })
+					})
+				}
+
+				const loadedNotes = JSON.parse(localStorage.getItem(NOTES_KEY))
+				if(loadedNotes) {
+					tracker.notes = loadedNotes
+					$("#notes").val(loadedNotes)
+				} 
+				tracker.update()
 			},
 			toggleDone: k => {
 				tracker.locations[k].done = ! tracker.locations[k].done
 				tracker.update()
+				tracker.save()
+			},
+			toggleOwned: n => {
+				const item = tracker.keyitems.find(ki => ki.name === n)
+				if(item) item.owned = ! item.owned
+				tracker.update()
+				tracker.save()
+			},
+			characterSelected: (k, v) => {
+				const character = tracker.characterLocations.find(c => c.name === k)
+				if(character) character.location = v
+				tracker.save()
 			},
 			reset: () => {
 				Object.keys(tracker.locations).forEach( k => {
 					tracker.locations[k].done = false
 				})
+				tracker.keyitems.forEach(ki => ki.owned = false)
+				$(".loca").each( (i,e) => {
+						$(e).val("- / -")
+					})		
+				$("#notes").val("")
 				tracker.update()
 			},
 			update: () => {
-				var items = new Set()
 				$("img[class^=collectible").each( (i,e) => {
-					if( $(e).hasClass("on") )
-						items.add( e.name )
+					const item = tracker.keyitems.find(ki => ki.name === e.name)
+					if(item) {
+						if(item.owned === true) $(e).addClass("on")
+						if(item.owned === false) $(e).removeClass("on")
+					}
 				})
 				var openChecks = []
 				var doneChecks = []
+
 				Object.keys(tracker.locations).forEach( k => {
 					var loc = tracker.locations[k]
 					var a = loc.access_rules
@@ -153,7 +219,9 @@
 						})
 					else {
 						for( var i = 0; i < a.length; i++ ) {
-							if( a[i].split(',').every( v => items.has(v) ) ) {
+							if( a[i].split(',')
+								.every( v => tracker.keyitems.find(ki => ki.name === v).owned === true )) 
+							{
 								openChecks.push({
 									name: k,
 									timeCost: loc.timeCost,
@@ -177,11 +245,37 @@
 				})
 				$("#done").html(doneElems)
 			},
+			save: () => {
+				localStorage.setItem(NOTES_KEY, JSON.stringify(tracker.notes))
+				localStorage.setItem(CHARACTER_KEY, JSON.stringify(tracker.characterLocations))
+				localStorage.setItem(LOCATION_KEY, JSON.stringify(tracker.locations))
+				localStorage.setItem(KEYITEMS_KEY, JSON.stringify(tracker.keyitems))
+			},
+			deleteData: () => {
+				localStorage.removeItem(NOTES_KEY)
+				localStorage.removeItem(CHARACTER_KEY)
+				localStorage.removeItem(LOCATION_KEY)
+				localStorage.removeItem(KEYITEMS_KEY)				
+			}
 		}
 		$( () => {
 			$("img[class^=collectible").click( e => {
 				$(e.currentTarget).toggleClass("on")
+				tracker.toggleOwned(e.currentTarget.name)
+			})
+			$("select[class^=loca]").change( e => {
+				tracker.characterSelected(e.currentTarget.name, e.currentTarget.value)
+			})
+			$("#resetButton").click( e => {
+				tracker.deleteData()
+				tracker.reset()
 				tracker.update()
+			})
+			$("#notes").bind('input propertychange', function() {
+				if(this.value.length){
+					tracker.notes = this.value
+					tracker.save()
+				}
 			})
 			fetch("data/locations.json").then(tracker.load)
 		})
