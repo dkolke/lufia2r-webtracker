@@ -236,7 +236,25 @@
 					.sort( (a,b) => (a.name > b.name) )
 					.sort( (a,b) => (a.timeCost > b.timeCost) )
 					.forEach( a => {
-						openElems += "<span class=\"badge bg-info pointer\" onclick=\"tracker.toggleDone('" + a.name + "')\">" + a.name + "</span><br/>"
+						var color = "background-color: "
+						if(a.timeCost === 0) {
+							color += "#f7cd11"
+						} else if(a.timeCost <= 2) {
+							color += "#0b992e"
+						} else if(a.timeCost <= 4) {
+							color += "#0ab6c9"
+						} else if(a.timeCost <= 5) {
+							color += "#0a77c9"
+						} else if(a.timeCost <= 10) {
+							color += "#730aa3"
+						} else if(a.timeCost <= 15) {
+							color += "#d10f0f"
+						} else if(a.timeCost <= 20) {
+							color += "#a30303"
+						}
+
+						openElems += "<span style=\""+ color +"\" class=\"badge pointer badge-item \" onclick=\"tracker.toggleDone('" + a.name + "')\">" 
+							+ "(" + a.timeCost + ") " + a.name + "</span>"
 					})
 				$("#tobechecked").html(openElems)
 				var doneElems = ""
