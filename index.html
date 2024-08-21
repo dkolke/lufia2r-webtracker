@@ -117,6 +117,7 @@
 		const CHARACTER_KEY = "lufia2r-webtracker-characters";
 		const KEYITEMS_KEY = "lufia2r-webtracker-keyitems";
 		const NOTES_KEY = "lufia2r-webtracker-notes";
+		const EMPTY_LOCATION = "- / -"
 		tracker = {
 			locations: {},
 			keyitems: {},
@@ -140,14 +141,14 @@
 					tracker.characterLocations = loadedCharacters
 					$(".loca").each( (i,e) => {
 						const character = loadedCharacters.find(c => c.name === e.name)
-						if(character && character.location !== "- / -") {
+						if(character && character.location !== EMPTY_LOCATION) {
 							$(e).val(character.location)
 						}
 					})					
 				} else {
 					tracker.characterLocations = []
 					$(".loca").each( (i,e) => {
-						tracker.characterLocations.push({ "name": e.name, "location": "- / -" })
+						tracker.characterLocations.push({ "name": e.name, "location": EMPTY_LOCATION })
 					})							
 				}
 
@@ -190,9 +191,11 @@
 					tracker.locations[k].done = false
 				})
 				tracker.keyitems.forEach(ki => ki.owned = false)
+				tracker.characterLocations.forEach(cl => cl.location = EMPTY_LOCATION)
 				$(".loca").each( (i,e) => {
 						$(e).val("- / -")
-					})		
+					})	
+				tracker.notes = ""	
 				$("#notes").val("")
 				tracker.update()
 			},
