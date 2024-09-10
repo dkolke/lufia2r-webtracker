@@ -21,6 +21,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
 	<style>
+		.offcanvas-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
 		.collectible {
 			width:32px;
 			height:32px;
@@ -48,9 +51,15 @@
 			column-gap: 5px;
 			align-content: center;
 		}
-		.badge-item {
+		.badge {
 			width: 12rem;
 		}
+		.top-right-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
 	</style>
 </head>
 <body>
@@ -110,19 +119,44 @@
 			</div>
 			<div class="col-md-3"></div>
 		</div>
-		<button id="resetButton" type="button" class="btn btn-secondary btn-sm" >Reset</button>
+		<div class="top-right-buttons">
+			<button id="resetButton" type="button" class="btn btn-danger btn-sm" >Reset</button>
+			<button id="showSettings" type="button" class="btn btn-primary btn-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">Settings</button>
+		</div>
+		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" >
+			<div class="offcanvas-header">
+				<h5 id="offcanvasRightLabel">Settings</h5>
+				<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="offcanvas-body">
+				<div class="form-check form-switch">
+					<input class="form-check-input l2r-setting" type="checkbox" id="showAsGrid">
+					<label class="form-check-label" for="showAsGrid">Show as grid</label>
+				</div>
+				<div class="form-check form-switch">
+					<input class="form-check-input l2r-setting" type="checkbox" id="useColors">
+					<label class="form-check-label" for="useColors">Use timecost dependent colors</label>
+				</div>
+				<div class="form-check form-switch">
+					<input class="form-check-input l2r-setting" type="checkbox" id="showTimeCost">
+					<label class="form-check-label" for="showTimeCost">Show timecost</label>
+				</div>
+			</div>
+		</div>
 	</center>
 	<script>
 		const LOCATION_KEY = "lufia2r-webtracker-locations";
 		const CHARACTER_KEY = "lufia2r-webtracker-characters";
 		const KEYITEMS_KEY = "lufia2r-webtracker-keyitems";
 		const NOTES_KEY = "lufia2r-webtracker-notes";
+		const SETTINGS_KEY = "lufia2r-webtracker-settings";
 		const EMPTY_LOCATION = "- / -"
 		tracker = {
 			locations: {},
 			keyitems: {},
 			notes: "",
 			characterLocations: {},
+			settings: {},
 			load: async data => {
 				const loadedLocations = JSON.parse(localStorage.getItem(LOCATION_KEY))
 				if(loadedLocations) {
@@ -168,6 +202,22 @@
 					tracker.notes = loadedNotes
 					$("#notes").val(loadedNotes)
 				} 
+
+				const loadedSettings = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+				if(loadedSettings) {
+					tracker.settings = loadedSettings
+				} else {
+					tracker.settings = {
+						"showAsGrid": true,
+						"useColors": true,
+						"showTimeCost": true
+					}
+				}
+
+				Object.keys(tracker.settings).forEach(function(key) {
+					$(`#${key}`).prop('checked', tracker.settings[key])
+				})
+
 				tracker.update()
 			},
 			toggleDone: k => {
@@ -186,6 +236,19 @@
 				if(character) character.location = v
 				tracker.save()
 			},
+			setSetting: (setting, value) => {
+				if(tracker.settings.hasOwnProperty(setting)) {
+					tracker.settings[setting] = value
+					tracker.save()
+				}
+				tracker.update()
+			},
+			updateNotes: v => {
+				if(v.length){
+					tracker.notes = v
+					tracker.save()
+				}
+			},
 			reset: () => {
 				Object.keys(tracker.locations).forEach( k => {
 					tracker.locations[k].done = false
@@ -193,7 +256,7 @@
 				tracker.keyitems.forEach(ki => ki.owned = false)
 				tracker.characterLocations.forEach(cl => cl.location = EMPTY_LOCATION)
 				$(".loca").each( (i,e) => {
-						$(e).val("- / -")
+						$(e).val(EMPTY_LOCATION)
 					})	
 				tracker.notes = ""	
 				$("#notes").val("")
@@ -256,21 +319,37 @@
 							color += "#a30303"
 						}
 
-						openElems += "<span style=\""+ color +"\" class=\"badge pointer badge-item \" onclick=\"tracker.toggleDone('" + a.name + "')\">" 
-							+ "(" + a.timeCost + ") " + a.name + "</span>"
+						openElems += "<span " + 
+							(tracker.settings.useColors ? `style=\"${color}\"` : "" ) +
+							"class=\"badge pointer " +
+							(tracker.settings.useColors ? "" : "bg-info") +
+							"\" onclick=\"tracker.toggleDone('" + a.name + "')\">" +
+							(tracker.settings.showTimeCost ? ("(" + a.timeCost + ") " + a.name) : a.name) +
+							"</span>" +
+							(tracker.settings.showAsGrid ? "" : "<br/>")
 					})
 				$("#tobechecked").html(openElems)
 				var doneElems = ""
 				doneChecks.forEach( a => {
-					doneElems += "<span class=\"badge bg-secondary pointer badge-item \" onclick=\"tracker.toggleDone('" + a + "')\">" + a + "</span>"
+					doneElems += "<span class=\"badge bg-secondary pointer  \" onclick=\"tracker.toggleDone('" + a + "')\">" + a + "</span>" +
+					(tracker.settings.showAsGrid ? "" : "<br/>")
 				})
 				$("#done").html(doneElems)
+				
+				if(tracker.settings.showAsGrid === true) {
+					$("#tobechecked").addClass("badge-grid")
+					$("#done").addClass("badge-grid")
+				} else {
+					$("#tobechecked").removeClass("badge-grid")
+					$("#done").removeClass("badge-grid")
+				}
 			},
 			save: () => {
 				localStorage.setItem(NOTES_KEY, JSON.stringify(tracker.notes))
 				localStorage.setItem(CHARACTER_KEY, JSON.stringify(tracker.characterLocations))
 				localStorage.setItem(LOCATION_KEY, JSON.stringify(tracker.locations))
 				localStorage.setItem(KEYITEMS_KEY, JSON.stringify(tracker.keyitems))
+				localStorage.setItem(SETTINGS_KEY, JSON.stringify(tracker.settings))
 			},
 			deleteData: () => {
 				localStorage.removeItem(NOTES_KEY)
@@ -292,11 +371,11 @@
 				tracker.reset()
 				tracker.update()
 			})
+			$(".l2r-setting").change( e => {
+				tracker.setSetting(e.currentTarget.id, e.currentTarget.checked)
+			})
 			$("#notes").bind('input propertychange', function() {
-				if(this.value.length){
-					tracker.notes = this.value
-					tracker.save()
-				}
+				tracker.updateNotes(this.value)
 			})
 			fetch("data/locations.json").then(tracker.load)
 		})
